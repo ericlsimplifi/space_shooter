@@ -16,13 +16,11 @@ def show_asteroid():
 
 def show_space_station():
     space_station.topright = -600, 500
-    #space_station.topright = (random.randint(0, WIDTH) + 50, -50)
-
 
 def move_asteroid():
     global level
     if asteroid.y < HEIGHT+100:
-        asteroid.y += 2 + level
+        asteroid.y += 8 + level
     else:
         asteroid.topright = (random.randint(0, WIDTH), 0)
 
@@ -34,7 +32,7 @@ def move_space_station():
         show_space_station()
 
 def move_laser():
-    if laser.y > -5:
+    if laser.y > -50:
         laser.y -= 10
         firing = False
 
@@ -101,7 +99,6 @@ def check_level():
         level = 2
         level_show_counter = level_show_counter + 1
         screen.draw.text("Level UP! " + str(level), pos=(level_show_counter * .1 + 50, 500), fontsize=80)
-
         screen.draw.text("Level UP! " + str(level), pos=(level_show_counter * .1 + 50, 500), fontsize=80)
         screen.draw.text("Level UP! " + str(level), pos=(level_show_counter * .1 + 50, 500), fontsize=80)
         alien = Actor('alien_spaceship2')
@@ -146,7 +143,7 @@ def update():
     moverand()
     move_laser()
     move_asteroid()
-    move_space_station()
+    #move_space_station()
     asteroid.angle -= 1
     check_collisions()
     check_level()
@@ -167,10 +164,9 @@ def update():
     if keyboard.s:
         ghost.right += 4
     if keyboard.space:
-        if laser.y < 0:
+        if laser.y < -50:
             firing = True
             fire_laser()
-            #clock.schedule(fire_laser, 0.1)
     screen.draw.text("Score " + str(score), pos=(800, 10))
     screen.draw.text("Level " + str(level), pos=(800, 40))
 
@@ -178,18 +174,9 @@ def update():
 def create_aliens():
     num_aliens = 1
     for alien_num in range(0, num_aliens):
-        alien = Actor('alien_spaceship2')
+        alien = Actor('alien')
         alien.topright = 200, 10
         aliens.append(alien)
-    # alien = Actor('alien_spaceship2')
-    # alien.topright = 200, 10
-    # ghost2 = Actor('alien_spaceship2')
-    # ghost2.topright = 200, 10
-    # ghost3 = Actor('alien_spaceship2')
-    # ghost3.topright = 200, 10
-    # ghost4 = Actor('ufo')
-    # ghost4.topright = 200, 10
-
 
 def moverand():
     import random
@@ -210,46 +197,31 @@ def on_mouse_move(rel, buttons):
 
 def draw():
     screen.clear()
-    screen.blit("stars", (0, 0))
-    space_station.draw()
+    #screen.blit("stars", (0, 0))
+    #space_station.draw()
     laser.draw()
     spaceship.draw()
     asteroid.draw()
     update()
 
 import pygame
-#background = pygame.image.load("./images/stars.jpeg")
-#blit("background",(0,0))
+
 WIDTH = 1000
 HEIGHT = 800
 firing = False
 level_show_counter = 0
 aliens = []
 
-spaceship = Actor('spaceship_small')
+spaceship = Actor('spaceship')
 spaceship.topright = WIDTH / 2, HEIGHT - 130
 
-# ghost = Actor('alien_spaceship2')
-# ghost.topright = 200, 10
-# ghost2 = Actor('alien_spaceship2')
-# ghost2.topright = 200, 10
-# ghost3 = Actor('alien_spaceship2')
-# ghost3.topright = 200, 10
-# ghost4 = Actor('ufo')
-# ghost4.topright = 200, 10
-#
-#
-# aliens.append(ghost)
-# aliens.append(ghost2)
-# aliens.append(ghost3)
-# aliens.append(ghost4)
 asteroid = Actor('asteroid')
 asteroid.topright = 1500, 0
 
-laser = Actor('shot')
+laser = Actor('black_missle')
 explosion = Actor('explosion')
 
-space_station = Actor('space_station')
+#space_station = Actor('space_station')
 
 score = 0
 level = 1
